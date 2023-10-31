@@ -14,6 +14,8 @@ export default function Index({ auth }) {
         imagem_destaque: null, // Inicialize como null
     });
 
+    
+
     const inputRef = useRef(); // Crie uma referência para o input de arquivo
 
     const submit = (e) => {
