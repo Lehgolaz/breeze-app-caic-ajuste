@@ -21,8 +21,6 @@ class UpdatePostRequest extends FormRequest
      */
     public function rules(): array
     {
-
-        dd($this);
         return [
             'titulo' => 'required|string|min:3|max:240',
             'conteudo' => 'required|string|min:3|max:6000',

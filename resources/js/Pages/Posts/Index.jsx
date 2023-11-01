@@ -7,6 +7,7 @@ import TextInput from "@/Components/TextInput";
 import TextAreaInput from "@/Components/TextAreaInput";
 import Post from "@/Components/Post";
 import { useForm, Head } from "@inertiajs/react";
+import PostForm from "@/Components/PostForm";
 
 export default function Index({ auth, posts }) {
     const { data, setData, post, processing, reset, errors } = useForm({
@@ -27,69 +28,25 @@ export default function Index({ auth, posts }) {
         });
     };
 
+    const cancel = () => {
+        if (window.confirm("Tem certeza de que deseja cancelar?")) {
+            reset();
+            clearErrors();
+        }
+    };
+
     return (
         <AuthenticatedLayout user={auth.user}>
             <Head title="Post" />
             <div className="max-w-2xl mx-auto p-4 sm:p-6 lg:p-8">
-                <form onSubmit={submit} encType="multipart/form-data">
-                    <div>
-                        <InputLabel htmlFor="titulo" value="Titulo" />
-                        <TextInput
-                            id="titulo"
-                            name="titulo"
-                            value={data.titulo}
-                            className="mt-1 block w-full"
-                            autoComplete="titulo"
-                            isFocused={true}
-                            onChange={(e) => setData("titulo", e.target.value)}
-                            required
-                        />
-                        <InputError message={errors.titulo} className="mt-2" />
-                    </div>
-                    <div>
-                        <InputLabel htmlFor="conteudo" value="Conteudo" />
-                        <TextAreaInput
-                            id="conteudo"
-                            name="conteudo"
-                            value={data.conteudo}
-                            className="mt-1 block w-full"
-                            autoComplete="conteudo"
-                            isFocused={true}
-                            onChange={(e) =>
-                                setData("conteudo", e.target.value)
-                            }
-                            required
-                        />
-                        <InputError
-                            message={errors.conteudo}
-                            className="mt-2"
-                        />
-                    </div>
-                    <div>
-                        <InputLabel htmlFor="imagem_destaque" value="Imagem" />
-                        <input
-                            type="file"
-                            id="imagem_destaque"
-                            name="imagem_destaque"
-                            className="mt-1 block w-full"
-                            autoComplete="imagem_destaque"
-                            onChange={(e) =>
-                                setData("imagem_destaque", e.target.files[0])
-                            }
-                            ref={inputRef} // Associe a referência ao input de arquivo
-                            required
-                        />
-                        <InputError
-                            message={errors.imagem_destaque}
-                            className="mt-2"
-                        />
-                    </div>
-                    <div className="flex items-center justify-end mt-4">
-                        <PrimaryButton className="ml-4" disabled={processing}>
-                            Post
-                        </PrimaryButton>
-                    </div>
-                </form>
+                <PostForm
+                    data={data}
+                    errors={errors}
+                    setData={setData}
+                    inputRef={inputRef}
+                    submit={submit}
+                    cancel={cancel}
+                />
 
                 <div className="mt-6 bg-white shadow-sm rounded-lg divide-y">
                     {posts.map((post) => (
