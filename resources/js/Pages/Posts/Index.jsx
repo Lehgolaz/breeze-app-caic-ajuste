@@ -5,16 +5,15 @@ import PrimaryButton from "@/Components/PrimaryButton";
 import InputLabel from "@/Components/InputLabel";
 import TextInput from "@/Components/TextInput";
 import TextAreaInput from "@/Components/TextAreaInput";
+import Post from "@/Components/Post";
 import { useForm, Head } from "@inertiajs/react";
 
-export default function Index({ auth }) {
+export default function Index({ auth, posts }) {
     const { data, setData, post, processing, reset, errors } = useForm({
         titulo: "",
         conteudo: "",
         imagem_destaque: null, // Inicialize como null
     });
-
-    
 
     const inputRef = useRef(); // Crie uma referência para o input de arquivo
 
@@ -91,6 +90,12 @@ export default function Index({ auth }) {
                         </PrimaryButton>
                     </div>
                 </form>
+
+                <div className="mt-6 bg-white shadow-sm rounded-lg divide-y">
+                    {posts.map((post) => (
+                        <Post key={post.id} post={post} />
+                    ))}
+                </div>
             </div>
         </AuthenticatedLayout>
     );

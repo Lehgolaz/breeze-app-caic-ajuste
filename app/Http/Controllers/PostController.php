@@ -18,7 +18,8 @@ class PostController extends Controller
     public function index()
     {
         return Inertia::render('Posts/Index', [
-            'posts' => Post::orderBy('updated_at', 'desc')->get(),
+            'posts' =>
+            Post::with('user:id,name')->latest()->get(),
         ]);
     }
 
@@ -111,9 +112,9 @@ class PostController extends Controller
     {
         $post = Post::findOrFail($id);
 
-        Storage::disk('public')->delete($post->featured_image);
+        Storage::disk('public')->delete($post->imagem_destaque); // Corrija a propriedade para 'imagem_destaque'
 
-        $delete = $post->delete($id);
+        $delete = $post->delete();
 
         if ($delete) {
             return redirect()->route('posts.index');
