@@ -75,33 +75,35 @@ class PostController extends Controller
             ]
         );
     }
+
     /**
      * Update the specified resource in storage.
      */
     public function update(UpdatePostRequest $request, string $id)
     {
+        // Encontra o post a ser atualizado
         $post = Post::findOrFail($id);
-        $validated = $request->validated();
+
+        // Valida os dados do formulário usando UpdatePostRequest
+        $validatedData = $request->validated();
 
         if ($request->hasFile('imagem_destaque')) {
             // Exclua a imagem anterior
             Storage::disk('public')->delete($post->imagem_destaque);
 
-            // Armazene a nova imagem
-            $filePath = Storage::disk('public')->put(
-                'images/posts/featured-images',
-                request()->file('imagem_destaque')
-            );
+            // Armazene a nova imagem e obtenha o caminho
+            $filePath = $request->file('imagem_destaque')->store('images/posts/featured-images', 'public');
 
-            // Atualize o caminho da imagem destacada no objeto Post
+            // Atualize o campo 'imagem_destaque' no objeto Post
             $post->imagem_destaque = $filePath;
         }
 
         // Atualize outros campos com os dados validados
-        $post->update($validated);
+        $post->update($validatedData);
 
         return redirect()->route('posts.index');
     }
+
 
 
     /**
@@ -111,7 +113,7 @@ class PostController extends Controller
     {
         $post = Post::findOrFail($id);
 
-        Storage::disk('public')->delete($post->imagem_destaque); // Corrija a propriedade para 'imagem_destaque'
+        Storage::disk('public')->delete($post->imagem_destaque);
 
         $delete = $post->delete();
 
