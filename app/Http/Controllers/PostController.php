@@ -84,24 +84,23 @@ class PostController extends Controller
         $validated = $request->validated();
 
         if ($request->hasFile('imagem_destaque')) {
-            // delete image
+            // Exclua a imagem anterior
             Storage::disk('public')->delete($post->imagem_destaque);
 
+            // Armazene a nova imagem
             $filePath = Storage::disk('public')->put(
                 'images/posts/featured-images',
-                request()->file('imagem_destaque'),
-                'public'
+                request()->file('imagem_destaque')
             );
-            $validated['imagem_destaque'] = $filePath;
+
+            // Atualize o caminho da imagem destacada no objeto Post
+            $post->imagem_destaque = $filePath;
         }
 
-        $update = $post->update($validated);
+        // Atualize outros campos com os dados validados
+        $post->update($validated);
 
-        if ($update) {
-            return redirect()->route('posts.index');
-        }
-
-        return abort(500);
+        return redirect()->route('posts.index');
     }
 
 
