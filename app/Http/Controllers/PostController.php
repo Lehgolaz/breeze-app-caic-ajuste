@@ -79,6 +79,9 @@ class PostController extends Controller
     /**
      * Update the specified resource in storage.
      */
+    /**
+     * Update the specified resource in storage.
+     */
     public function update(UpdatePostRequest $request, string $id)
     {
         // Encontra o post a ser atualizado
@@ -103,8 +106,6 @@ class PostController extends Controller
 
         return redirect()->route('posts.index');
     }
-
-
 
     /**
      * Remove the specified resource from storage.
