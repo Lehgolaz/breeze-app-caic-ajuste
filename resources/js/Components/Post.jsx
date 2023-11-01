@@ -13,8 +13,6 @@ export default function Post({ post }) {
 
     const [editing, setEditing] = useState(false);
 
-
-
     const { data, setData, patch, clearErrors, reset, errors } = useForm({
         titulo: post.titulo,
         conteudo: post.conteudo,
@@ -23,6 +21,9 @@ export default function Post({ post }) {
 
     const submit = (e) => {
         e.preventDefault();
+
+        console.log(data);
+
         patch(route("posts.update", post.id), {
             onSuccess: () => setEditing(false),
         });

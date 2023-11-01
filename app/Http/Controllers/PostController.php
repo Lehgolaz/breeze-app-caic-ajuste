@@ -90,6 +90,8 @@ class PostController extends Controller
         // Valida os dados do formulário usando UpdatePostRequest
         $validatedData = $request->validated();
 
+        dd($validatedData);
+
         if ($request->hasFile('imagem_destaque')) {
             // Exclua a imagem anterior
             Storage::disk('public')->delete($post->imagem_destaque);
