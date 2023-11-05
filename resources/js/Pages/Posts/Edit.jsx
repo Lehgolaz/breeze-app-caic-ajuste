@@ -14,7 +14,7 @@ export default function Edit({ auth, post }) {
     const inputRef = React.useRef();
 
     const { data, setData, put, clearErrors, reset, errors } = useForm(
-        "editForm",
+        "editFor",
         {
             titulo: post.titulo || "",
             conteudo: post.conteudo || "",
