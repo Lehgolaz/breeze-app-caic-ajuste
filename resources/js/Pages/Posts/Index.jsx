@@ -61,7 +61,6 @@ export default function Index({ auth, posts }) {
                     {posts.map((post) => (
                         <div key={post.id}>
                             <Post post={post} />
-
                             {auth.user.id === post.user.id && (
                                 <div className="mt-2">
                                     <button
