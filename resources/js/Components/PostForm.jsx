@@ -5,11 +5,19 @@ import TextAreaInput from "@/Components/TextAreaInput";
 import InputError from "@/Components/InputError";
 import PrimaryButton from "@/Components/PrimaryButton";
 
-const PostForm = ({ data, errors, setData, inputRef, submit, cancel }) => {
+const PostForm = ({
+    data,
+    errors,
+    setData,
+    inputRef,
+    submit,
+    cancel,
+    withImageUpload,
+}) => {
     return (
         <form onSubmit={submit} encType="multipart/form-data">
             <div>
-                <InputLabel htmlFor="titulo" value="Titulo" />
+                <InputLabel htmlFor="titulo" value="Título" />
                 <TextInput
                     id="titulo"
                     name="titulo"
@@ -23,7 +31,7 @@ const PostForm = ({ data, errors, setData, inputRef, submit, cancel }) => {
                 <InputError message={errors.titulo} className="mt-2" />
             </div>
             <div>
-                <InputLabel htmlFor="conteudo" value="Conteudo" />
+                <InputLabel htmlFor="conteudo" value="Conteúdo" />
                 <TextAreaInput
                     id="conteudo"
                     name="conteudo"
@@ -36,8 +44,12 @@ const PostForm = ({ data, errors, setData, inputRef, submit, cancel }) => {
                 />
                 <InputError message={errors.conteudo} className="mt-2" />
             </div>
+
             <div>
-                <InputLabel htmlFor="imagem_destaque" value="Imagem" />
+                <InputLabel
+                    htmlFor="imagem_destaque"
+                    value="Imagem Destacada"
+                />
                 <input
                     type="file"
                     id="imagem_destaque"
@@ -47,15 +59,18 @@ const PostForm = ({ data, errors, setData, inputRef, submit, cancel }) => {
                     onChange={(e) =>
                         setData("imagem_destaque", e.target.files[0])
                     }
-                    ref={inputRef} // Associe a referência ao input de arquivo
+                    ref={inputRef}
                     required
                 />
                 <InputError message={errors.imagem_destaque} className="mt-2" />
             </div>
+
             <div className="space-x-2">
-                <PrimaryButton className="mt-4">Save</PrimaryButton>
+                <PrimaryButton className="mt-4" type="submit">
+                    Salvar
+                </PrimaryButton>
                 <button className="mt-4" onClick={cancel}>
-                    Cancel
+                    Cancelar
                 </button>
             </div>
         </form>
